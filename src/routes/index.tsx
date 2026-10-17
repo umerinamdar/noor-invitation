@@ -123,9 +123,9 @@ function Invitation() {
           <div className="relative z-10 flex w-full max-w-md flex-col items-center">
             <p className="eyebrow animate-fade-up text-gold-soft" style={{ animationDelay: "1.6s" }}>Bismillah · Together with their families</p>
             <h1 className="mt-5 font-display font-light italic leading-[0.95]">
-              <span className="text-gold animate-shimmer animate-fade-up block text-6xl sm:text-7xl" style={{ animationDelay: "2.2s" }}>{COUPLE.a}</span>
+              <span className="animate-fade-up block" style={{ animationDelay: "2.2s" }}><span className="text-gold animate-shimmer block pb-2 text-6xl sm:text-7xl">{COUPLE.a}</span></span>
               <span className="animate-fade-up my-2 block text-3xl text-gold-soft" style={{ animationDelay: "2.8s" }}>&amp;</span>
-              <span className="text-gold animate-shimmer animate-fade-up block text-6xl sm:text-7xl" style={{ animationDelay: "3.2s" }}>{COUPLE.b}</span>
+              <span className="animate-fade-up block" style={{ animationDelay: "3.2s" }}><span className="text-gold animate-shimmer block pb-2 text-6xl sm:text-7xl">{COUPLE.b}</span></span>
             </h1>
             <p className="eyebrow animate-fade-up mt-6 text-paper" style={{ animationDelay: "3.8s" }}>request the honour of your presence</p>
             <div className="animate-fade-up mt-8 w-full max-w-xs" style={{ animationDelay: "4.4s" }}>
