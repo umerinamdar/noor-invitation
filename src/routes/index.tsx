@@ -92,10 +92,10 @@ function Invitation() {
         requestAnimationFrame(step);
       }).catch(() => {});
     }
-    // 1.2s weighted hold + 4.5s swing, then the verse page lingers before fading into the site
+    // 1.2s hold + 4.5s sideways opening, quote on the spread, warm flash, then the site
     setTimeout(() => setPhase("verse"), rm ? 50 : 5700);
-    setTimeout(() => setPhase("open"), rm ? 100 : 9200);
-    setTimeout(() => setLidGone(true), rm ? 150 : 10400);
+    setTimeout(() => setPhase("open"), rm ? 100 : 10200);
+    setTimeout(() => setLidGone(true), rm ? 150 : 11600);
   };
 
   const onDateReveal = () => {
