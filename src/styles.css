@@ -284,7 +284,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .book.is-opening .book-cover { animation-duration: .01s; }
-  .book.is-opening .book-scene { animation-duration: .01s; } .book.is-opening .book-verse-layer { animation-delay: 0s; }
+  .book.is-opening .book-shift { animation-duration: .01s; } .book.is-opening .book-verse-layer { animation-delay: 0s; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal-on-scroll { opacity: 1; transform: none; }
   .petal { display: none; }
