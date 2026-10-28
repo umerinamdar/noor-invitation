@@ -158,9 +158,13 @@ function Invitation() {
               <div className="book-volume">
                 {/* First ivory page, revealed as the cover turns */}
                 <div className="book-page paper-ivory absolute inset-0 overflow-hidden">
-                  <div className="absolute inset-[7%] flex flex-col items-center justify-center border border-gold/50 text-center">
-                    <span className="eyebrow text-gold">Bismillah</span>
-                    <span className="mt-4 font-display text-3xl italic text-tint">{COUPLE.a} &amp; {COUPLE.b}</span>
+                  <div className="absolute inset-[7%] border border-gold/50" />
+                  <div className="book-quote absolute inset-[11%] flex flex-col items-center justify-center text-center">
+                    <span className="text-[1.3rem] uppercase tracking-[0.35em] text-gold">Surah Ar-Rum · 30:21</span>
+                    <div className="gold-rule mt-6 w-40" />
+                    <p className="mt-8 font-display text-[2.6rem] font-light italic leading-snug text-tint">
+                      “And among His signs is that He created for you spouses from among yourselves, that you may find tranquillity in them; and He placed between you affection and mercy.”
+                    </p>
                   </div>
                   <div className="book-page-dim absolute inset-0" />
                   <div className="book-curl absolute inset-y-0" />
@@ -184,22 +188,21 @@ function Invitation() {
                     </div>
                     <div className="book-cover-shade absolute inset-0" />
                   </div>
-                  <div className="book-inside absolute inset-0"><div className="book-inside-frame absolute inset-[7%]" /></div>
+                  <div className="book-inside absolute inset-0">
+                    <div className="book-inside-frame absolute inset-[7%]" />
+                    <div className="book-quote absolute inset-[11%] flex flex-col items-center justify-center text-center">
+                      <p dir="rtl" lang="ar" className="font-[Amiri,serif] text-[3rem] leading-[1.9] text-gold-soft">
+                        وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          {/* After the book opens: the verse, full page */}
-          <div className="book-verse-layer paper-ivory absolute inset-0 flex items-center justify-center px-6">
-            <div className="frame-card max-w-md px-7 py-12 text-center">
-              <Corners />
-              <p className="eyebrow text-gold">A blessing</p>
-              <p className="mt-6 font-display text-2xl font-light italic leading-relaxed text-tint sm:text-3xl">
-                “And among His signs is that He created for you spouses from among yourselves, that you may find tranquillity in them; and He placed between you affection and mercy.”
-              </p>
-              <Divider className="mt-8" />
-              <p className="eyebrow mt-4 text-muted-foreground">Surah Ar-Rum · 30:21</p>
-            </div>
+          {/* Warm burst of light rising from the centre fold */}
+          <div className="book-flash absolute inset-0" aria-hidden="true">
+            <div className="book-flash-glow" />
           </div>
         </button>
       )}
