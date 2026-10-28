@@ -153,31 +153,41 @@ function Invitation() {
           aria-label={`Open the invitation from ${COUPLE.a} and ${COUPLE.b}`}
           className={`book fixed inset-0 z-50 block overflow-hidden bg-background outline-none ${phase !== "sealed" ? "is-opening" : ""} ${phase === "open" ? "is-done" : ""}`}
         >
-          <div className="book-scene absolute inset-0">
-          {/* First ivory page */}
-          <div className="book-page paper-ivory absolute inset-0">
-            <div className="book-page-dim absolute inset-0" />
-            <div className="book-curl absolute inset-y-0" />
-          </div>
-          {/* Page block (fore-edge) and spine */}
-          <div className="book-edge absolute inset-y-0 left-0" />
-          <div className="book-spine absolute inset-y-0 right-0" />
-          {/* Cover: front artwork + emerald/gold inside */}
-          <div className="book-cover absolute inset-0">
-            <div className="book-face absolute inset-0">
-              <img src={sealedBackdrop} alt="" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,color-mix(in_oklab,var(--background)_75%,transparent))]" />
-              <div className="absolute inset-x-0 top-[12%] flex flex-col items-center gap-3 px-4">
-                <span className="eyebrow text-gold-soft">You are Invited</span>
-                <div className="gold-rule w-24" />
-              </div>
-              <div className="absolute inset-x-0 bottom-[6%] flex flex-col items-center gap-4 px-4">
-                <span className={`plate eyebrow px-5 py-2 transition-opacity duration-500 ${phase === "sealed" ? "animate-glow" : "opacity-0"}`}>Tap to open</span>
-                <span className="text-gold animate-shimmer font-display text-4xl italic sm:text-5xl">{COUPLE.a} &amp; {COUPLE.b}</span>
+          <div className="book-shift absolute inset-0">
+            <div className="book-stage absolute inset-0">
+              <div className="book-volume">
+                {/* First ivory page, revealed as the cover turns */}
+                <div className="book-page paper-ivory absolute inset-0 overflow-hidden">
+                  <div className="absolute inset-[7%] flex flex-col items-center justify-center border border-gold/50 text-center">
+                    <span className="eyebrow text-gold">Bismillah</span>
+                    <span className="mt-4 font-display text-3xl italic text-tint">{COUPLE.a} &amp; {COUPLE.b}</span>
+                  </div>
+                  <div className="book-page-dim absolute inset-0" />
+                  <div className="book-curl absolute inset-y-0" />
+                </div>
+                {/* Page-block thickness (fore-edge, left) and spine (right) */}
+                <div className="book-edge absolute" />
+                <div className="book-spine absolute" />
+                {/* Rigid cover, hinged on the right spine */}
+                <div className="book-cover absolute inset-0">
+                  <div className="book-face absolute inset-0 overflow-hidden">
+                    <img src={sealedBackdrop} alt="" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,color-mix(in_oklab,var(--background)_75%,transparent))]" />
+                    <div className="absolute inset-[3%] border border-gold/60" />
+                    <div className="absolute inset-x-0 top-[10%] flex flex-col items-center gap-3 px-4">
+                      <span className="eyebrow text-gold-soft">You are Invited</span>
+                      <div className="gold-rule w-24" />
+                    </div>
+                    <div className="absolute inset-x-0 bottom-[6%] flex flex-col items-center gap-4 px-4">
+                      <span className={`plate eyebrow px-5 py-2 transition-opacity duration-500 ${phase === "sealed" ? "animate-glow" : "opacity-0"}`}>Tap to open</span>
+                      <span className="text-gold animate-shimmer font-display text-4xl italic">{COUPLE.a} &amp; {COUPLE.b}</span>
+                    </div>
+                    <div className="book-cover-shade absolute inset-0" />
+                  </div>
+                  <div className="book-inside absolute inset-0"><div className="book-inside-frame absolute inset-[7%]" /></div>
+                </div>
               </div>
             </div>
-            <div className="book-inside absolute inset-0"><div className="book-inside-frame absolute inset-[5%]" /></div>
-          </div>
           </div>
           {/* After the book opens: the verse, full page */}
           <div className="book-verse-layer paper-ivory absolute inset-0 flex items-center justify-center px-6">
