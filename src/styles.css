@@ -236,7 +236,6 @@
   width: 40%; left: -40%; opacity: 0;
   background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 22%, transparent) 70%, color-mix(in oklab, var(--foreground) 50%, transparent) 95%, transparent);
 }
-.book-verse-layer { opacity: 0; z-index: 10; pointer-events: none; }
 
 /* 1.2s weighted hold (21%), then a 4.5s swing around the right spine */
 .book.is-opening .book-cover { animation: book-cover 5.7s forwards; }
@@ -299,7 +298,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .book.is-opening .book-cover { animation-duration: .01s; }
-  .book.is-opening .book-shift { animation-duration: .01s; } .book.is-opening .book-verse-layer { animation-delay: 0s; }
+  .book.is-opening .book-shift { animation-duration: .01s; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal-on-scroll { opacity: 1; transform: none; }
   .petal { display: none; }
