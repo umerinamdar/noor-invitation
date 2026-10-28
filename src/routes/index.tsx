@@ -4,7 +4,6 @@ import confetti from "canvas-confetti";
 
 import sealedBackdrop from "@/assets/sealed-backdrop.jpg";
 import heroBackdrop from "@/assets/hero-backdrop.jpg";
-import waxSeal from "@/assets/wax-seal.png";
 import paperTexture from "@/assets/paper-texture.jpg";
 import gallery1 from "@/assets/gallery-1.jpg";
 import gallery2 from "@/assets/gallery-2.jpg";
@@ -63,7 +62,7 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
 const reducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- Page ---------- */
-type Phase = "sealed" | "opening" | "open";
+type Phase = "sealed" | "opening" | "verse" | "open";
 
 function Invitation() {
   const [phase, setPhase] = useState<Phase>("sealed");
@@ -93,8 +92,10 @@ function Invitation() {
         requestAnimationFrame(step);
       }).catch(() => {});
     }
-    setTimeout(() => setLidGone(true), rm ? 50 : 1500);
-    setTimeout(() => setPhase("open"), rm ? 100 : 6000);
+    // 1.2s weighted hold + 4.5s swing, then the verse page lingers before fading into the site
+    setTimeout(() => setPhase("verse"), rm ? 50 : 5700);
+    setTimeout(() => setPhase("open"), rm ? 100 : 9200);
+    setTimeout(() => setLidGone(true), rm ? 150 : 10400);
   };
 
   const onDateReveal = () => {
@@ -107,7 +108,7 @@ function Invitation() {
     }
   };
 
-  const started = phase !== "sealed";
+  const started = phase === "open";
 
   return (
     <div style={{ "--paper-img": `url(${paperTexture})` } as CSSProperties} className="relative bg-background">
@@ -144,26 +145,46 @@ function Invitation() {
         )}
       </section>
 
-      {/* SEALED BOX (the lid) */}
+      {/* SEALED BOOK — hinged on the right, opens like a horizontal keepsake book */}
       {!lidGone && (
         <button
           type="button"
           onClick={open}
           aria-label={`Open the invitation from ${COUPLE.a} and ${COUPLE.b}`}
-          className={`fixed inset-0 z-50 block overflow-hidden bg-background outline-none ${phase === "opening" ? "animate-lid" : ""}`}
+          className={`book fixed inset-0 z-50 block overflow-hidden bg-background outline-none ${phase !== "sealed" ? "is-opening" : ""} ${phase === "open" ? "is-done" : ""}`}
         >
-          <img src={sealedBackdrop} alt="" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,color-mix(in_oklab,var(--background)_75%,transparent))]" />
-          <div
-            className={`absolute left-1/2 top-[50.8%] aspect-square ${phase === "opening" ? "animate-seal-pop" : "animate-breathe"}`}
-            style={{ width: "calc(max(100vw, 150dvh) * 0.2)", maxWidth: "70vw" }}
-          >
-            <img src={waxSeal} alt="" width={816} height={816} className="h-full w-full drop-shadow-[0_10px_18px_var(--background)]" />
-            <span className="text-gold absolute inset-0 flex items-center justify-center font-display text-[clamp(1.2rem,5vmin,3.4rem)] italic">{COUPLE.initials}</span>
+          {/* First ivory page: the verse */}
+          <div className="book-page paper-ivory absolute inset-0 flex items-center justify-center px-6">
+            <div className="book-verse frame-card max-w-md px-7 py-12 text-center">
+              <Corners />
+              <p className="eyebrow text-gold">A blessing</p>
+              <p className="mt-6 font-display text-2xl font-light italic leading-relaxed text-tint sm:text-3xl">
+                “And among His signs is that He created for you spouses from among yourselves, that you may find tranquillity in them; and He placed between you affection and mercy.”
+              </p>
+              <Divider className="mt-8" />
+              <p className="eyebrow mt-4 text-muted-foreground">Surah Ar-Rum · 30:21</p>
+            </div>
+            <div className="book-page-dim absolute inset-0" />
+            <div className="book-curl absolute inset-y-0" />
           </div>
-          <div className="absolute inset-x-0 bottom-[6%] flex flex-col items-center gap-4 px-4">
-            <span className="plate eyebrow animate-glow px-5 py-2">Tap to open</span>
-            <span className="text-gold animate-shimmer font-display text-4xl italic sm:text-5xl">{COUPLE.a} &amp; {COUPLE.b}</span>
+          {/* Page block (fore-edge) and spine */}
+          <div className="book-edge absolute inset-y-0 left-0" />
+          <div className="book-spine absolute inset-y-0 right-0" />
+          {/* Cover: front artwork + emerald/gold inside */}
+          <div className="book-cover absolute inset-0">
+            <div className="book-face absolute inset-0">
+              <img src={sealedBackdrop} alt="" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,color-mix(in_oklab,var(--background)_75%,transparent))]" />
+              <div className="absolute inset-x-0 top-[12%] flex flex-col items-center gap-3 px-4">
+                <span className="eyebrow text-gold-soft">You are Invited</span>
+                <div className="gold-rule w-24" />
+              </div>
+              <div className="absolute inset-x-0 bottom-[6%] flex flex-col items-center gap-4 px-4">
+                <span className={`plate eyebrow px-5 py-2 transition-opacity duration-500 ${phase === "sealed" ? "animate-glow" : "opacity-0"}`}>Tap to open</span>
+                <span className="text-gold animate-shimmer font-display text-4xl italic sm:text-5xl">{COUPLE.a} &amp; {COUPLE.b}</span>
+              </div>
+            </div>
+            <div className="book-inside absolute inset-0"><div className="book-inside-frame absolute inset-[5%]" /></div>
           </div>
         </button>
       )}
