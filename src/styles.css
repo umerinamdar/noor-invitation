@@ -195,7 +195,7 @@
 
 
 /* ---------- Book opening (right hinge) ---------- */
-.book { perspective: 2200px; perspective-origin: 70% 50%; transition: opacity 1.2s var(--ease-weighted); }
+.book { perspective: 1100px; perspective-origin: 30% 50%; transition: opacity 1.2s var(--ease-weighted); }
 .book.is-done { opacity: 0; pointer-events: none; }
 .book-cover { transform-origin: right center; transform-style: preserve-3d; z-index: 3; }
 .book-face, .book-inside { backface-visibility: hidden; }
@@ -231,8 +231,8 @@
 .book.is-opening .book-verse { animation: fade-up 1.8s var(--ease-weighted) 4.6s both; }
 @keyframes book-cover {
   0% { transform: rotateY(0) translateZ(0); animation-timing-function: cubic-bezier(.45,0,.3,1); }
-  21% { transform: rotateY(6deg) translateZ(18px); animation-timing-function: cubic-bezier(.7,0,.18,1); }
-  100% { transform: rotateY(180deg) translateZ(0); }
+  21% { transform: rotateY(-4deg) translateZ(40px) scale(.995); animation-timing-function: cubic-bezier(.7,0,.18,1); }
+  100% { transform: rotateY(-178deg) translateZ(0); }
 }
 @keyframes book-dim { 0%,21% { opacity: .85; } 70% { opacity: .2; } 100% { opacity: 0; } }
 @keyframes book-curl {
