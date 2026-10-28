@@ -196,11 +196,11 @@
 
 /* ---------- Book opening: rigid cover, hinged on the RIGHT spine, true 3D turn ---------- */
 .book { transition: opacity 1.2s var(--ease-weighted); }
-.book.is-done { opacity: 0; pointer-events: none; }
+.book.is-done { opacity: 0; pointer-events: none; transition-duration: 1.4s; }
 .book-shift { display: flex; align-items: center; justify-content: center; }
 .book-stage { display: flex; align-items: center; justify-content: center; perspective: 1400px; perspective-origin: 50% 45%; }
 .book-volume {
-  position: relative; width: min(84vw, 460px); height: min(76dvh, 760px);
+  position: relative; width: 100vw; height: 100dvh;
   transform-style: preserve-3d;
   box-shadow: 0 30px 60px -20px #000c;
 }
@@ -236,7 +236,6 @@
   width: 40%; left: -40%; opacity: 0;
   background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 22%, transparent) 70%, color-mix(in oklab, var(--foreground) 50%, transparent) 95%, transparent);
 }
-.book-verse-layer { opacity: 0; z-index: 10; pointer-events: none; }
 
 /* 1.2s weighted hold (21%), then a 4.5s swing around the right spine */
 .book.is-opening .book-cover { animation: book-cover 5.7s forwards; }
@@ -244,7 +243,22 @@
 .book.is-opening .book-shift { animation: book-shift 5.7s forwards; }
 .book.is-opening .book-page-dim { animation: book-dim 5.7s forwards; }
 .book.is-opening .book-curl { animation: book-curl 5.7s forwards; }
-.book.is-opening .book-verse-layer { animation: verse-in 1.6s var(--ease-weighted) 5.5s both; }
+.book-quote { opacity: 0; }
+.book-flash { opacity: 0; pointer-events: none; z-index: 10; }
+.book-flash-glow {
+  position: absolute; left: 50%; top: 50%; width: 30vmax; height: 30vmax; transform: translate(-50%, -50%) scale(.2);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--paper-light) 0%, var(--highlight) 22%, color-mix(in oklab, var(--accent) 70%, transparent) 45%, transparent 70%);
+}
+.book.is-opening .book-quote { animation: verse-in 1.4s var(--ease-weighted) 5.8s both; }
+.book.is-opening .book-flash { animation: flash-veil 3s ease-in 8.6s both; }
+.book.is-opening .book-flash-glow { animation: flash-burst 3s var(--ease-weighted) 8.6s both; }
+@keyframes flash-veil { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 1; } }
+@keyframes flash-burst {
+  0% { transform: translate(-50%, -50%) scale(.1); }
+  55% { transform: translate(-50%, -50%) scale(6); }
+  100% { transform: translate(-50%, -50%) scale(7); }
+}
 
 @keyframes book-cover {
   0% { transform: translateZ(2px) rotateY(0deg); animation-timing-function: cubic-bezier(.45,0,.3,1); }
@@ -255,7 +269,7 @@
 /* pull the volume left and back so the opened spread (cover swung out to the right) stays in view */
 @keyframes book-shift {
   0%,21% { transform: none; animation-timing-function: cubic-bezier(.55,0,.15,1); }
-  100% { transform: translateX(-27%) scale(.5); }
+  100% { transform: translateX(-25vw) scale(.5); }
 }
 @keyframes verse-in { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: blur(0); } }
 @keyframes book-dim { 0%,21% { opacity: .85; } 70% { opacity: .15; } 100% { opacity: 0; } }
@@ -284,7 +298,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .book.is-opening .book-cover { animation-duration: .01s; }
-  .book.is-opening .book-shift { animation-duration: .01s; } .book.is-opening .book-verse-layer { animation-delay: 0s; }
+  .book.is-opening .book-shift { animation-duration: .01s; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal-on-scroll { opacity: 1; transform: none; }
   .petal { display: none; }
