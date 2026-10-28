@@ -190,6 +190,7 @@ function Invitation() {
               <Divider className="mt-8" />
               <p className="eyebrow mt-4 text-muted-foreground">Surah Ar-Rum · 30:21</p>
             </div>
+          </div>
         </button>
       )}
 
