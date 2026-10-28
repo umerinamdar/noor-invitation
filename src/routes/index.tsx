@@ -153,17 +153,9 @@ function Invitation() {
           aria-label={`Open the invitation from ${COUPLE.a} and ${COUPLE.b}`}
           className={`book fixed inset-0 z-50 block overflow-hidden bg-background outline-none ${phase !== "sealed" ? "is-opening" : ""} ${phase === "open" ? "is-done" : ""}`}
         >
-          {/* First ivory page: the verse */}
-          <div className="book-page paper-ivory absolute inset-0 flex items-center justify-center px-6">
-            <div className="book-verse frame-card max-w-md px-7 py-12 text-center">
-              <Corners />
-              <p className="eyebrow text-gold">A blessing</p>
-              <p className="mt-6 font-display text-2xl font-light italic leading-relaxed text-tint sm:text-3xl">
-                “And among His signs is that He created for you spouses from among yourselves, that you may find tranquillity in them; and He placed between you affection and mercy.”
-              </p>
-              <Divider className="mt-8" />
-              <p className="eyebrow mt-4 text-muted-foreground">Surah Ar-Rum · 30:21</p>
-            </div>
+          <div className="book-scene absolute inset-0">
+          {/* First ivory page */}
+          <div className="book-page paper-ivory absolute inset-0">
             <div className="book-page-dim absolute inset-0" />
             <div className="book-curl absolute inset-y-0" />
           </div>
@@ -186,6 +178,18 @@ function Invitation() {
             </div>
             <div className="book-inside absolute inset-0"><div className="book-inside-frame absolute inset-[5%]" /></div>
           </div>
+          </div>
+          {/* After the book opens: the verse, full page */}
+          <div className="book-verse-layer paper-ivory absolute inset-0 flex items-center justify-center px-6">
+            <div className="frame-card max-w-md px-7 py-12 text-center">
+              <Corners />
+              <p className="eyebrow text-gold">A blessing</p>
+              <p className="mt-6 font-display text-2xl font-light italic leading-relaxed text-tint sm:text-3xl">
+                “And among His signs is that He created for you spouses from among yourselves, that you may find tranquillity in them; and He placed between you affection and mercy.”
+              </p>
+              <Divider className="mt-8" />
+              <p className="eyebrow mt-4 text-muted-foreground">Surah Ar-Rum · 30:21</p>
+            </div>
         </button>
       )}
 
