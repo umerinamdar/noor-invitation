@@ -5,3 +5,5 @@
 - [x] Separate quick flash, readable quote, and courtyard welcome.
 - [x] Refresh welcome artwork and presentation; preserve remaining sections.
 - [x] Verify sequence on phone and desktop.
+- [x] Apply chosen Mughal cover and subtly textured interior, inspired by the latest reference without copying it.
+- [x] Separate Arabic and English into page-safe columns and verify opening on phone and desktop.
