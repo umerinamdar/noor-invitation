@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
-import cover from "@/assets/manuscript-cover-refined.jpg";
+import cover from "@/assets/manuscript-cover-luminous.jpg";
+import setting from "@/assets/book-setting.jpg";
 import { Button } from "@/components/ui/button";
 import { Corners } from "./Ornaments";
 import { OPENING } from "./opening-timeline";
@@ -11,7 +12,7 @@ export function OpeningBook({ phase, onOpen, names }: { phase: OpeningPhase; onO
   return (
     <div className={`manuscript ${started ? "has-started" : ""} ${phase === "open" ? "has-finished" : ""}`} data-phase={phase}
       style={{ "--book-hold": `${OPENING.hold}ms`, "--book-swing": `${OPENING.swing}ms`, "--book-flash-duration": `${OPENING.flash}ms` } as CSSProperties}>
-      <div className="manuscript-floor" aria-hidden="true" />
+      <img className="manuscript-floor" src={setting} alt="" width={1536} height={1024} aria-hidden="true" />
       <div className="manuscript-stage">
         <div className="manuscript-camera">
           <div className="manuscript-volume">

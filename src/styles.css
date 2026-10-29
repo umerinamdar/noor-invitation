@@ -42,7 +42,7 @@
 :root {
   --radius: 0.25rem;
   --book-navy: #173563;
-  --book-scene: #17324e;
+  --book-scene: #eeeae3;
   --book-shadow: #08182b;
   --accent: #c9a24b;
   --accent-soft: #e3cb8f;
@@ -199,14 +199,14 @@
 
 /* ---------- Manuscript: one rigid cover turns sideways into an ivory spread ---------- */
 .manuscript {
-  --page-width: min(86vw, 54dvh, 500px);
+  --page-width: min(84vw, 52dvh, 680px);
   --spread-scale: .54;
   position: fixed; inset: 0; z-index: 50; overflow: hidden;
   background: var(--book-scene); color: var(--accent-soft);
   transition: opacity 1s var(--ease-weighted);
 }
 .manuscript.has-finished { opacity: 0; pointer-events: none; }
-.manuscript-floor { position: absolute; inset: 0; background-image: var(--paper-img); background-size: 450px; opacity: .07; }
+.manuscript-floor { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .manuscript-stage { position: absolute; inset: 0; perspective: 1800px; perspective-origin: 50% 45%; }
 .manuscript-camera { position: absolute; left: 50%; top: 50%; width: var(--page-width); aspect-ratio: 2 / 3; margin-top: calc(var(--page-width) * -.75); transform: translateX(-50%); transform-origin: 0 50%; transform-style: preserve-3d; }
 .manuscript-volume { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
@@ -228,9 +228,9 @@
 @keyframes manuscript-turn { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(-180deg); } }
 @keyframes manuscript-frame { 0% { transform: translateX(-50%); } 40%,100% { transform: translateX(0) scale(var(--spread-scale)); } }
 @keyframes manuscript-shadow { 0% { opacity: .65; background-position: 0; } 45% { opacity: .8; } 100% { opacity: 0; } }
-.manuscript-controls { position: absolute; bottom: 4dvh; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
-.manuscript-controls p { font-family: var(--font-display); font-style: italic; font-size: 20px; color: var(--accent-soft); }
-.manuscript-open { height: 42px; padding: 0 24px; border-radius: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0; background: var(--book-navy); }
+.manuscript-controls { position: absolute; top: calc(50% + var(--page-width) * .75 + 32px); left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.manuscript-controls p { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--book-navy); }
+.manuscript-open { height: 44px; padding: 0 28px; border-radius: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0; background: var(--book-navy); box-shadow: var(--shadow-plate); }
 .manuscript-open:hover { background: var(--book-navy); color: var(--highlight); }
 .manuscript-verse { position: absolute; left: -100%; top: 0; width: 200%; height: 100%; padding: 6% 9%; transform: translateZ(8px); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; color: var(--tint); text-align: center; animation: manuscript-verse-in .8s ease-out both; }
 .manuscript-verse-label { font-family: var(--font-sans); font-size: 18px; color: var(--scratch-ink); text-transform: uppercase; }
