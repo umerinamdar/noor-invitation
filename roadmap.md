@@ -1,4 +1,8 @@
 # Invitation refresh
+- [x] Redesign the cover from the latest reference with a filled centre and less dense borders.
+- [x] Add illuminated ivory pages and verify separate page-safe verses.
+- [x] Rework sections with carved ivory and navy architectural grounds; retain the courtyard hero.
+- [x] Verify opening sequence and section layouts at 320px and desktop; routing and timeline tests passed.
 - [x] Replace opening artwork and horizontal book mechanism.
 - [x] Use a clearly navy-blue cover, never black.
 - [x] Replace rejected texture and dense ornament with a smoother restrained cover; no names, only invitation controls below.
