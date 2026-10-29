@@ -219,6 +219,7 @@
 .manuscript-camera { position: absolute; left: 50%; top: 50%; width: var(--page-width); aspect-ratio: 2 / 3; margin-top: calc(var(--page-width) * -.75); transform: translateX(-50%); transform-origin: 0 50%; transform-style: preserve-3d; }
 .manuscript-volume { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
 .manuscript-page { position: absolute; inset: 0; border-radius: 2px 7px 7px 2px; }
+.manuscript-paper-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; border-radius: inherit; }
 .manuscript-right { box-shadow: inset 25px 0 35px -20px var(--scratch-ink), 6px 12px 0 -4px var(--paper-dark), 10px 18px 0 -5px var(--book-navy), 0 35px 60px -20px var(--book-shadow); }
 .manuscript-page-frame { position: absolute; inset: 5%; border: 1px solid var(--accent); outline: 1px solid var(--border); outline-offset: 5px; }
 .manuscript-cover { position: absolute; inset: 0; transform-origin: 0 50%; transform-style: preserve-3d; transform: rotateY(0deg); }
@@ -240,10 +241,12 @@
 .manuscript-controls p { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--book-navy); }
 .manuscript-open { height: 44px; padding: 0 28px; border-radius: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0; background: var(--book-navy); box-shadow: var(--shadow-plate); }
 .manuscript-open:hover { background: var(--book-navy); color: var(--highlight); }
-.manuscript-verse { position: absolute; left: -100%; top: 0; width: 200%; height: 100%; padding: 6% 9%; transform: translateZ(8px); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; color: var(--tint); text-align: center; animation: manuscript-verse-in .8s ease-out both; }
-.manuscript-verse-label { font-family: var(--font-sans); font-size: 18px; color: var(--scratch-ink); text-transform: uppercase; }
-.manuscript-arabic { font-family: Amiri, serif; font-size: 36px; line-height: 1.7; }
-.manuscript-english { font-family: var(--font-display); font-size: 28px; line-height: 1.35; font-style: italic; }
+.manuscript-verse { position: absolute; left: -100%; top: 0; width: 200%; height: 100%; transform: translateZ(8px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); color: var(--book-navy); text-align: center; animation: manuscript-verse-in .8s ease-out both; }
+.manuscript-verse-page { min-width: 0; padding: 12% 13%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; }
+.manuscript-verse-label { font-family: var(--font-sans); font-size: 16px; color: var(--scratch-ink); text-transform: uppercase; }
+.manuscript-arabic-page .manuscript-verse-label { font-family: Amiri, serif; font-size: 23px; }
+.manuscript-arabic { font-family: Amiri, serif; font-size: 30px; line-height: 1.85; overflow-wrap: break-word; }
+.manuscript-english { font-family: var(--font-display); font-size: 28px; line-height: 1.5; font-style: italic; }
 .manuscript-verse .gold-rule { flex: 0 0 1px; width: 140px; }
 @keyframes manuscript-verse-in { from { opacity: 0; } to { opacity: 1; } }
 .manuscript-flash { position: absolute; inset: 0; z-index: 10; pointer-events: none; animation: manuscript-flash var(--book-flash-duration) ease-in-out both; }
@@ -252,7 +255,7 @@
 @keyframes manuscript-flash { 0%,100% { opacity: 0; } 28%,55% { opacity: 1; } }
 @keyframes manuscript-burst { from { transform: scale(.02); } to { transform: scale(1.5); } }
 @media (min-width: 900px) { .manuscript { --spread-scale: .88; } }
-@media (max-width: 360px) { .manuscript-verse { gap: 10px; } .manuscript-arabic { font-size: 30px; } .manuscript-english { font-size: 23px; } }
+@media (max-width: 899px) { .manuscript-verse-page { padding: 11% 12%; gap: 12px; } .manuscript-arabic { font-size: 24px; line-height: 1.75; } .manuscript-english { font-size: 23px; line-height: 1.4; } .manuscript-verse-label { font-size: 14px; } .manuscript-arabic-page .manuscript-verse-label { font-size: 20px; } .manuscript-verse .gold-rule { width: 70px; } }
 .welcome-scene { border-bottom: 1px solid var(--accent); }
 .welcome-art { object-position: center; }
 @utility animate-settle { animation: settle 6s var(--ease-weighted) forwards; }
