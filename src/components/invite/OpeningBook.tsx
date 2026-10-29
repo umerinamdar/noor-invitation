@@ -20,12 +20,10 @@ export function OpeningBook({ phase, onOpen, names }: { phase: OpeningPhase; onO
             <div className="manuscript-spine" aria-hidden="true" />
             <div className="manuscript-cover">
               <div className="manuscript-front">
-                <img src={cover} alt="An emerald leather invitation book with embossed gold floral ornament" width={1024} height={1536} />
+                <img src={cover} alt="A navy-blue leather invitation book with embossed gold floral ornament" width={1024} height={1536} />
                 <div className="manuscript-cover-copy">
                   <p className="eyebrow text-gold-soft">You are Invited</p>
                   <p className="manuscript-names font-display text-gold">{names}</p>
-                  <div className="gold-rule w-20" />
-                  <p className="manuscript-dedication text-gold-soft">A celebration of love</p>
                 </div>
               </div>
               <div className="manuscript-back paper-ivory"><div className="manuscript-page-frame"><Corners /></div></div>
