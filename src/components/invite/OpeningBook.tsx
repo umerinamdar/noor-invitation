@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import cover from "@/assets/manuscript-cover.jpg";
+import cover from "@/assets/manuscript-cover-refined.jpg";
 import { Button } from "@/components/ui/button";
 import { Corners } from "./Ornaments";
 import { OPENING } from "./opening-timeline";
@@ -21,10 +21,6 @@ export function OpeningBook({ phase, onOpen, names }: { phase: OpeningPhase; onO
             <div className="manuscript-cover">
               <div className="manuscript-front">
                 <img src={cover} alt="A navy-blue leather invitation book with embossed gold floral ornament" width={1024} height={1536} />
-                <div className="manuscript-cover-copy">
-                  <p className="eyebrow text-gold-soft">You are Invited</p>
-                  <p className="manuscript-names font-display text-gold">{names}</p>
-                </div>
               </div>
               <div className="manuscript-back paper-ivory"><div className="manuscript-page-frame"><Corners /></div></div>
               <div className="manuscript-cover-edge" aria-hidden="true" />
@@ -40,7 +36,7 @@ export function OpeningBook({ phase, onOpen, names }: { phase: OpeningPhase; onO
           </div>
         </div>
       </div>
-      {phase === "sealed" && <Button variant="ghost" onClick={onOpen} aria-label={`Open the invitation from ${names}`} className="manuscript-open plate">Tap to open</Button>}
+      {phase === "sealed" && <div className="manuscript-controls"><Button variant="ghost" onClick={onOpen} aria-label={`Open the invitation from ${names}`} className="manuscript-open plate">Tap to open</Button><p>You're invited</p></div>}
       {phase === "flash" && <div className="manuscript-flash" aria-hidden="true"><div className="manuscript-light" /><div className="manuscript-light-ray" /></div>}
     </div>
   );
