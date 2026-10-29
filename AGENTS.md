@@ -12,3 +12,4 @@
 - Keep the book opening isolated in OpeningBook and drive flash/quote/welcome from opening-timeline; mutually exclusive phases prevent light from washing out the verse.
 - Rotate the rigid book cover around its vertical spine in CSS 3D; camera reframing must be independent of the cover turn so both pages remain visible.
 - Render the opening verse in two independent page-bound columns, Arabic on the right and translation on the left, so neither crosses the spine.
+- Scope architectural surround images to invitation sections through inherited CSS asset variables; keep the courtyard hero independent so its artwork is not repeated through the page.

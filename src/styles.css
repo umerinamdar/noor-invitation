@@ -47,6 +47,8 @@
   --section-navy: #405b7c;
   --section-navy-surface: #354e6d;
   --section-navy-depth: #2c4361;
+  --carved-light: #fffcf3;
+  --carved-shadow: #b6a78b;
   --accent: #c9a24b;
   --accent-soft: #e3cb8f;
   --tint: #0f3d2e;
@@ -85,6 +87,44 @@
   --tint: var(--section-navy);
   --surface: var(--section-navy-surface);
   --background: var(--section-navy-depth);
+}
+.invitation-sections > section { position: relative; isolation: isolate; }
+.invitation-sections > section.paper-ivory {
+  background-image: var(--ivory-surround);
+  background-size: 100% 100%;
+  background-blend-mode: normal;
+}
+.invitation-sections > section.paper-emerald {
+  background-color: var(--section-navy);
+  background-image: var(--navy-surround);
+  background-size: 100% 100%;
+  background-blend-mode: normal;
+}
+.invitation-sections > section > div { position: relative; z-index: 1; }
+.invitation-sections .frame-card {
+  background-image: var(--paper-img);
+  background-size: 360px;
+  background-blend-mode: multiply;
+  border-color: color-mix(in oklab, var(--accent) 55%, var(--paper-dark));
+  box-shadow: inset 0 2px 3px var(--carved-light), inset 0 0 34px color-mix(in oklab, var(--paper-dark) 45%, transparent), 0 8px 18px -14px var(--carved-shadow);
+}
+.invitation-sections .frame-card-dark {
+  background-color: color-mix(in oklab, var(--section-navy) 85%, transparent);
+  background-image: var(--paper-img);
+  background-size: 360px;
+  background-blend-mode: soft-light;
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--accent-soft) 35%, transparent), 0 10px 22px -16px var(--book-shadow);
+}
+.countdown-unit { border-top: 1px solid var(--accent-soft); border-bottom: 1px solid color-mix(in oklab, var(--accent-soft) 50%, transparent); min-width: 0; }
+.countdown-unit + .countdown-unit { border-left: 1px solid color-mix(in oklab, var(--accent-soft) 30%, transparent); }
+.invitation-sections .eyebrow { letter-spacing: 0; }
+@media (min-width: 900px) {
+  .invitation-sections > section { padding-left: max(40px, 17%); padding-right: max(40px, 17%); }
+}
+@media (max-width: 599px) {
+  .invitation-sections > section.paper-ivory,
+  .invitation-sections > section.paper-emerald { background-size: auto 100%; background-position: center; }
+  .invitation-sections > section { padding-left: 20px; padding-right: 20px; }
 }
 @utility paper-ivory {
   background-color: var(--paper);
@@ -242,7 +282,7 @@
 .manuscript-open { height: 44px; padding: 0 28px; border-radius: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0; background: var(--book-navy); box-shadow: var(--shadow-plate); }
 .manuscript-open:hover { background: var(--book-navy); color: var(--highlight); }
 .manuscript-verse { position: absolute; left: -100%; top: 0; width: 200%; height: 100%; transform: translateZ(8px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); color: var(--book-navy); text-align: center; animation: manuscript-verse-in .8s ease-out both; }
-.manuscript-verse-page { min-width: 0; padding: 12% 13%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; }
+.manuscript-verse-page { box-sizing: border-box; min-width: 0; min-height: 0; padding: 8% 9%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; }
 .manuscript-verse-label { font-family: var(--font-sans); font-size: 16px; color: var(--scratch-ink); text-transform: uppercase; }
 .manuscript-arabic-page .manuscript-verse-label { font-family: Amiri, serif; font-size: 23px; }
 .manuscript-arabic { font-family: Amiri, serif; font-size: 30px; line-height: 1.85; overflow-wrap: break-word; }
@@ -255,7 +295,8 @@
 @keyframes manuscript-flash { 0%,100% { opacity: 0; } 28%,55% { opacity: 1; } }
 @keyframes manuscript-burst { from { transform: scale(.02); } to { transform: scale(1.5); } }
 @media (min-width: 900px) { .manuscript { --spread-scale: .88; } }
-@media (max-width: 899px) { .manuscript-verse-page { padding: 11% 12%; gap: 12px; } .manuscript-arabic { font-size: 24px; line-height: 1.75; } .manuscript-english { font-size: 23px; line-height: 1.4; } .manuscript-verse-label { font-size: 14px; } .manuscript-arabic-page .manuscript-verse-label { font-size: 20px; } .manuscript-verse .gold-rule { width: 70px; } }
+@media (max-width: 899px) { .manuscript-verse-page { padding: 7% 9%; gap: 10px; } .manuscript-arabic { font-size: 24px; line-height: 1.65; } .manuscript-english { font-size: 23px; line-height: 1.35; } .manuscript-verse-label { font-size: 13px; } .manuscript-arabic-page .manuscript-verse-label { font-size: 18px; } .manuscript-verse .gold-rule { width: 70px; } }
+@media (max-width: 359px), (max-height: 550px) { .manuscript-english { font-size: 19px; line-height: 1.3; } .manuscript-arabic { font-size: 21px; line-height: 1.5; } .manuscript-verse-page { gap: 6px; } }
 .welcome-scene { border-bottom: 1px solid var(--accent); }
 .welcome-art { object-position: center; }
 @utility animate-settle { animation: settle 6s var(--ease-weighted) forwards; }
