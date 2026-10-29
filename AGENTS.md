@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep the book opening isolated in OpeningBook and drive flash/quote/welcome from opening-timeline; mutually exclusive phases prevent light from washing out the verse.
+- Rotate the rigid book cover around its vertical spine in CSS 3D; camera reframing must be independent of the cover turn so both pages remain visible.
