@@ -44,6 +44,9 @@
   --book-navy: #173563;
   --book-scene: #eeeae3;
   --book-shadow: #08182b;
+  --section-navy: #405b7c;
+  --section-navy-surface: #354e6d;
+  --section-navy-depth: #2c4361;
   --accent: #c9a24b;
   --accent-soft: #e3cb8f;
   --tint: #0f3d2e;
@@ -78,6 +81,11 @@
 }
 
 /* ---------- Paper grounds ---------- */
+.invitation-sections {
+  --tint: var(--section-navy);
+  --surface: var(--section-navy-surface);
+  --background: var(--section-navy-depth);
+}
 @utility paper-ivory {
   background-color: var(--paper);
   background-image:

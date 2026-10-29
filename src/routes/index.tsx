@@ -150,7 +150,7 @@ function Invitation() {
 
       {petals && <Petals />}
 
-      <main className="relative">
+      <main className="invitation-sections relative bg-background">
         <ArchBand />
         {/* FAMILIES */}
         <section className="paper-ivory px-5 py-20 sm:py-28">
