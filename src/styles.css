@@ -41,6 +41,9 @@
 
 :root {
   --radius: 0.25rem;
+  --book-navy: #173563;
+  --book-scene: #17324e;
+  --book-shadow: #08182b;
   --accent: #c9a24b;
   --accent-soft: #e3cb8f;
   --tint: #0f3d2e;
@@ -194,92 +197,56 @@
 }
 
 
-/* ---------- Book opening: rigid cover, hinged on the RIGHT spine, true 3D turn ---------- */
-.book { transition: opacity 1.2s var(--ease-weighted); }
-.book.is-done { opacity: 0; pointer-events: none; transition-duration: 1.4s; }
-.book-shift { display: flex; align-items: center; justify-content: center; }
-.book-stage { display: flex; align-items: center; justify-content: center; perspective: 1400px; perspective-origin: 50% 45%; }
-.book-volume {
-  position: relative; width: 100vw; height: 100dvh;
-  transform-style: preserve-3d;
-  box-shadow: 0 30px 60px -20px #000c;
+/* ---------- Manuscript: one rigid cover turns sideways into an ivory spread ---------- */
+.manuscript {
+  --page-width: min(86vw, 54dvh, 500px);
+  --spread-scale: .54;
+  position: fixed; inset: 0; z-index: 50; overflow: hidden;
+  background: var(--book-scene); color: var(--accent-soft);
+  transition: opacity 1s var(--ease-weighted);
 }
-.book-page { transform: translateZ(0); }
-.book-cover { transform-origin: 100% 50%; transform-style: preserve-3d; transform: translateZ(2px); }
-.book-face, .book-inside { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.book-face { box-shadow: inset 0 0 0 1px var(--accent); }
-.book-cover-shade { background: linear-gradient(90deg, transparent 30%, var(--background)); opacity: 0; pointer-events: none; }
-.book-inside {
-  transform: rotateY(180deg);
-  background:
-    radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--accent) 35%, transparent) 0 2px, transparent 3px) 0 0 / 28px 28px,
-    repeating-linear-gradient(45deg, color-mix(in oklab, var(--accent) 22%, transparent) 0 1px, transparent 1px 20px),
-    repeating-linear-gradient(-45deg, color-mix(in oklab, var(--accent) 22%, transparent) 0 1px, transparent 1px 20px),
-    radial-gradient(ellipse at center, var(--surface), var(--background));
-  box-shadow: inset 0 0 80px var(--background), inset 0 0 0 1px var(--accent);
-}
-.book-inside-frame { border: 1px solid var(--accent); outline: 1px solid color-mix(in oklab, var(--accent) 40%, transparent); outline-offset: 6px; }
-/* page block thickness on the free (left) edge */
-.book-edge {
-  top: 1.5%; bottom: 1.5%; left: -9px; width: 9px;
-  background: repeating-linear-gradient(90deg, var(--paper-light) 0 1px, var(--paper-dark) 1px 2px);
-  box-shadow: inset 2px 0 4px color-mix(in oklab, var(--foreground) 35%, transparent);
-}
-/* spine on the right, the hinge */
-.book-spine {
-  top: -0.5%; bottom: -0.5%; right: -12px; width: 14px; transform: translateZ(1px);
-  border-radius: 0 6px 6px 0;
-  background: linear-gradient(90deg, var(--background), var(--surface) 35%, color-mix(in oklab, var(--accent) 55%, var(--surface)) 55%, var(--background));
-}
-.book-page-dim { background: var(--background); opacity: 0.85; }
-.book-curl {
-  width: 40%; left: -40%; opacity: 0;
-  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 22%, transparent) 70%, color-mix(in oklab, var(--foreground) 50%, transparent) 95%, transparent);
-}
-
-/* 1.2s weighted hold (21%), then a 4.5s swing around the right spine */
-.book.is-opening .book-cover { animation: book-cover 5.7s forwards; }
-.book.is-opening .book-cover-shade { animation: book-shade 5.7s forwards; }
-.book.is-opening .book-shift { animation: book-shift 5.7s forwards; }
-.book.is-opening .book-page-dim { animation: book-dim 5.7s forwards; }
-.book.is-opening .book-curl { animation: book-curl 5.7s forwards; }
-.book-quote { opacity: 0; }
-.book-flash { opacity: 0; pointer-events: none; z-index: 10; }
-.book-flash-glow {
-  position: absolute; left: 50%; top: 50%; width: 30vmax; height: 30vmax; transform: translate(-50%, -50%) scale(.2);
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--paper-light) 0%, var(--highlight) 22%, color-mix(in oklab, var(--accent) 70%, transparent) 45%, transparent 70%);
-}
-/* flash FIRST (5.75s, on its own, no quote yet), quote SECOND (8.6s, after the flash has faded) */
-.book.is-opening .book-quote { animation: verse-in 1.5s var(--ease-weighted) 8.6s both; }
-.book.is-opening .book-flash { animation: flash-veil 2.8s ease-in-out 5.75s both; }
-.book.is-opening .book-flash-glow { animation: flash-burst 2.8s var(--ease-weighted) 5.75s both; }
-@keyframes flash-veil { 0% { opacity: 0; } 20% { opacity: 1; } 62% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes flash-burst {
-  0% { transform: translate(-50%, -50%) scale(.1); }
-  55% { transform: translate(-50%, -50%) scale(6); }
-  100% { transform: translate(-50%, -50%) scale(7); }
-}
-
-@keyframes book-cover {
-  0% { transform: translateZ(2px) rotateY(0deg); animation-timing-function: cubic-bezier(.45,0,.3,1); }
-  21% { transform: translateZ(14px) rotateY(6deg); animation-timing-function: cubic-bezier(.55,0,.15,1); }
-  100% { transform: translateZ(2px) rotateY(178deg); }
-}
-@keyframes book-shade { 0%,21% { opacity: 0; } 55% { opacity: .75; } 100% { opacity: 0; } }
-/* pull the volume left and back so the opened spread (cover swung out to the right) stays in view */
-@keyframes book-shift {
-  0%,21% { transform: none; animation-timing-function: cubic-bezier(.55,0,.15,1); }
-  100% { transform: translateX(-25vw) scale(.5); }
-}
-@keyframes verse-in { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: blur(0); } }
-@keyframes book-dim { 0%,21% { opacity: .85; } 70% { opacity: .15; } 100% { opacity: 0; } }
-@keyframes book-curl {
-  0%,24% { left: -40%; opacity: 0; animation-timing-function: cubic-bezier(.55,0,.15,1); }
-  40% { opacity: 1; }
-  85% { opacity: .5; }
-  100% { left: 100%; opacity: 0; }
-}
+.manuscript.has-finished { opacity: 0; pointer-events: none; }
+.manuscript-floor { position: absolute; inset: 0; background-image: var(--paper-img); background-size: 450px; opacity: .07; }
+.manuscript-stage { position: absolute; inset: 0; perspective: 1800px; perspective-origin: 50% 45%; }
+.manuscript-camera { position: absolute; left: 50%; top: 50%; width: var(--page-width); aspect-ratio: 2 / 3; margin-top: calc(var(--page-width) * -.75); transform: translateX(-50%); transform-origin: 0 50%; transform-style: preserve-3d; }
+.manuscript-volume { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+.manuscript-page { position: absolute; inset: 0; border-radius: 2px 7px 7px 2px; }
+.manuscript-right { box-shadow: inset 25px 0 35px -20px var(--scratch-ink), 6px 12px 0 -4px var(--paper-dark), 10px 18px 0 -5px var(--book-navy), 0 35px 60px -20px var(--book-shadow); }
+.manuscript-page-frame { position: absolute; inset: 5%; border: 1px solid var(--accent); outline: 1px solid var(--border); outline-offset: 5px; }
+.manuscript-cover { position: absolute; inset: 0; transform-origin: 0 50%; transform-style: preserve-3d; transform: rotateY(0deg); }
+.manuscript-front, .manuscript-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 4px; }
+.manuscript-front { transform: translateZ(3px); overflow: hidden; box-shadow: 0 25px 65px -15px var(--book-shadow); }
+.manuscript-front img { width: 100%; height: 100%; object-fit: fill; }
+.manuscript-back { transform: rotateY(180deg) translateZ(3px); box-shadow: inset -25px 0 35px -20px var(--scratch-ink), -6px 12px 0 -4px var(--paper-dark), -10px 18px 0 -5px var(--book-navy); }
+.manuscript-spine { position: absolute; left: -5px; top: 0; bottom: 0; width: 10px; transform: translateZ(1px); background: linear-gradient(90deg, var(--book-navy), var(--accent), var(--book-navy)); border-radius: 4px; }
+.manuscript-page-edges { position: absolute; right: -7px; top: 1%; bottom: -6px; width: 7px; background: repeating-linear-gradient(90deg, var(--paper), var(--paper) 1px, var(--border) 1px, var(--border) 2px); }
+.manuscript-cover-edge { position: absolute; right: -3px; top: 0; width: 6px; height: 100%; transform: rotateY(90deg); background: var(--book-navy); }
+.manuscript-turn-shadow { position: absolute; inset: 0; opacity: .65; background: linear-gradient(90deg, transparent, var(--scratch-ink)); }
+.manuscript.has-started .manuscript-cover { animation: manuscript-turn var(--book-swing) var(--ease-weighted) var(--book-hold) forwards; }
+.manuscript.has-started .manuscript-camera { animation: manuscript-frame var(--book-swing) var(--ease-weighted) var(--book-hold) forwards; }
+.manuscript.has-started .manuscript-turn-shadow { animation: manuscript-shadow var(--book-swing) var(--ease-weighted) var(--book-hold) forwards; }
+@keyframes manuscript-turn { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(-180deg); } }
+@keyframes manuscript-frame { 0% { transform: translateX(-50%); } 40%,100% { transform: translateX(0) scale(var(--spread-scale)); } }
+@keyframes manuscript-shadow { 0% { opacity: .65; background-position: 0; } 45% { opacity: .8; } 100% { opacity: 0; } }
+.manuscript-controls { position: absolute; bottom: 4dvh; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.manuscript-controls p { font-family: var(--font-display); font-style: italic; font-size: 20px; color: var(--accent-soft); }
+.manuscript-open { height: 42px; padding: 0 24px; border-radius: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0; background: var(--book-navy); }
+.manuscript-open:hover { background: var(--book-navy); color: var(--highlight); }
+.manuscript-verse { position: absolute; left: -100%; top: 0; width: 200%; height: 100%; padding: 6% 9%; transform: translateZ(8px); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; color: var(--tint); text-align: center; animation: manuscript-verse-in .8s ease-out both; }
+.manuscript-verse-label { font-family: var(--font-sans); font-size: 18px; color: var(--scratch-ink); text-transform: uppercase; }
+.manuscript-arabic { font-family: Amiri, serif; font-size: 36px; line-height: 1.7; }
+.manuscript-english { font-family: var(--font-display); font-size: 28px; line-height: 1.35; font-style: italic; }
+.manuscript-verse .gold-rule { flex: 0 0 1px; width: 140px; }
+@keyframes manuscript-verse-in { from { opacity: 0; } to { opacity: 1; } }
+.manuscript-flash { position: absolute; inset: 0; z-index: 10; pointer-events: none; animation: manuscript-flash var(--book-flash-duration) ease-in-out both; }
+.manuscript-light { position: absolute; inset: -100%; background: radial-gradient(ellipse at center, var(--paper-light) 0 18%, var(--highlight) 28%, color-mix(in oklab, var(--accent) 80%, transparent) 40%, transparent 65%); animation: manuscript-burst var(--book-flash-duration) ease-out both; }
+.manuscript-light-ray { position: absolute; width: 36%; left: 32%; bottom: 50%; height: 70%; background: linear-gradient(0deg, var(--highlight), transparent); clip-path: polygon(45% 100%, 0 0, 100% 0, 55% 100%); }
+@keyframes manuscript-flash { 0%,100% { opacity: 0; } 28%,55% { opacity: 1; } }
+@keyframes manuscript-burst { from { transform: scale(.02); } to { transform: scale(1.5); } }
+@media (min-width: 900px) { .manuscript { --spread-scale: .88; } }
+@media (max-width: 360px) { .manuscript-verse { gap: 10px; } .manuscript-arabic { font-size: 30px; } .manuscript-english { font-size: 23px; } }
+.welcome-scene { border-bottom: 1px solid var(--accent); }
+.welcome-art { object-position: center; }
 @utility animate-settle { animation: settle 6s var(--ease-weighted) forwards; }
 @utility animate-fade-up { animation: fade-up 1.8s var(--ease-weighted) both; }
 @utility animate-shimmer { animation: shimmer 6s linear infinite; }
@@ -298,8 +265,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .book.is-opening .book-cover { animation-duration: .01s; }
-  .book.is-opening .book-shift { animation-duration: .01s; }
+  .manuscript.has-started .manuscript-cover { animation-delay: 0ms; }
+  .manuscript.has-started .manuscript-camera { animation-delay: 0ms; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal-on-scroll { opacity: 1; transform: none; }
   .petal { display: none; }

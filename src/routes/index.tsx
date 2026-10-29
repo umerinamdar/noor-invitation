@@ -2,14 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import confetti from "canvas-confetti";
 
-import sealedBackdrop from "@/assets/sealed-backdrop.jpg";
 import heroBackdrop from "@/assets/hero-backdrop.jpg";
+import welcomeBackdrop from "@/assets/welcome-courtyard.jpg";
 import paperTexture from "@/assets/paper-texture.jpg";
 import gallery1 from "@/assets/gallery-1.jpg";
 import gallery2 from "@/assets/gallery-2.jpg";
 import gallery3 from "@/assets/gallery-3.jpg";
 import { ScratchCard } from "@/components/invite/ScratchCard";
 import { ArchBand, Corners, Divider, SectionHeading } from "@/components/invite/Ornaments";
+import { OpeningBook, type OpeningPhase } from "@/components/invite/OpeningBook";
+import { openingMilestones } from "@/components/invite/opening-timeline";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -62,10 +64,8 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
 const reducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- Page ---------- */
-type Phase = "sealed" | "opening" | "verse" | "open";
-
 function Invitation() {
-  const [phase, setPhase] = useState<Phase>("sealed");
+  const [phase, setPhase] = useState<OpeningPhase>("sealed");
   const [lidGone, setLidGone] = useState(false);
   const [petals, setPetals] = useState(false);
   const sealAudio = useRef<HTMLAudioElement>(null);
@@ -88,14 +88,15 @@ function Invitation() {
       m.play().then(() => {
         m.muted = false;
         const start = performance.now();
-        const step = (t: number) => { const p = Math.min(1, (t - start) / 8000); m.volume = 0.6 * p; if (p < 1) requestAnimationFrame(step); };
+        const step = (t: number) => { const p = Math.max(0, Math.min(1, (t - start) / 8000)); m.volume = 0.6 * p; if (p < 1) requestAnimationFrame(step); };
         requestAnimationFrame(step);
       }).catch(() => {});
     }
-    // 1.2s hold + 4.5s sideways opening, flash alone, then the quote, then the site
-    setTimeout(() => setPhase("verse"), rm ? 50 : 5700);
-    setTimeout(() => setPhase("open"), rm ? 100 : 13200);
-    setTimeout(() => setLidGone(true), rm ? 150 : 14800);
+    const timeline = openingMilestones(rm);
+    if (!rm) setTimeout(() => setPhase("flash"), timeline.flashAt);
+    setTimeout(() => setPhase("quote"), timeline.quoteAt);
+    setTimeout(() => setPhase("open"), timeline.welcomeAt);
+    setTimeout(() => setLidGone(true), timeline.removeAt);
   };
 
   const onDateReveal = () => {
@@ -116,8 +117,8 @@ function Invitation() {
       <audio ref={music} src="/audio/music.mp3" preload="auto" loop />
 
       {/* HERO (revealed under the lid) */}
-      <section className="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-5 py-16 text-center">
-        <img src={heroBackdrop} alt="" width={1536} height={1024} className={`absolute inset-0 h-full w-full object-cover ${started ? "animate-settle" : "scale-[1.18] brightness-50"}`} />
+      <section className="welcome-scene relative flex min-h-[94dvh] flex-col items-center justify-center overflow-hidden px-5 py-16 text-center">
+        <img src={welcomeBackdrop} alt="" width={1536} height={1024} className={`welcome-art absolute inset-0 h-full w-full object-cover ${started ? "animate-settle" : "scale-[1.18] brightness-50"}`} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--background)_55%,transparent),transparent_70%)]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
         {started && (
@@ -145,67 +146,7 @@ function Invitation() {
         )}
       </section>
 
-      {/* SEALED BOOK — hinged on the right, opens like a horizontal keepsake book */}
-      {!lidGone && (
-        <button
-          type="button"
-          onClick={open}
-          aria-label={`Open the invitation from ${COUPLE.a} and ${COUPLE.b}`}
-          className={`book fixed inset-0 z-50 block overflow-hidden bg-background outline-none ${phase !== "sealed" ? "is-opening" : ""} ${phase === "open" ? "is-done" : ""}`}
-        >
-          <div className="book-shift absolute inset-0">
-            <div className="book-stage absolute inset-0">
-              <div className="book-volume">
-                {/* First ivory page, revealed as the cover turns */}
-                <div className="book-page paper-ivory absolute inset-0 overflow-hidden">
-                  <div className="absolute inset-[7%] border border-gold/50" />
-                  <div className="book-quote absolute inset-[11%] flex flex-col items-center justify-center text-center">
-                    <span className="text-[1.3rem] uppercase tracking-[0.35em] text-gold">Surah Ar-Rum · 30:21</span>
-                    <div className="gold-rule mt-6 w-40" />
-                    <p className="mt-8 font-display text-[2.6rem] font-light italic leading-snug text-tint">
-                      “And among His signs is that He created for you spouses from among yourselves, that you may find tranquillity in them; and He placed between you affection and mercy.”
-                    </p>
-                  </div>
-                  <div className="book-page-dim absolute inset-0" />
-                  <div className="book-curl absolute inset-y-0" />
-                </div>
-                {/* Page-block thickness (fore-edge, left) and spine (right) */}
-                <div className="book-edge absolute" />
-                <div className="book-spine absolute" />
-                {/* Rigid cover, hinged on the right spine */}
-                <div className="book-cover absolute inset-0">
-                  <div className="book-face absolute inset-0 overflow-hidden">
-                    <img src={sealedBackdrop} alt="" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover" />
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,color-mix(in_oklab,var(--background)_75%,transparent))]" />
-                    <div className="absolute inset-[3%] border border-gold/60" />
-                    <div className="absolute inset-x-0 top-[10%] flex flex-col items-center gap-3 px-4">
-                      <span className="eyebrow text-gold-soft">You are Invited</span>
-                      <div className="gold-rule w-24" />
-                    </div>
-                    <div className="absolute inset-x-0 bottom-[6%] flex flex-col items-center gap-4 px-4">
-                      <span className={`plate eyebrow px-5 py-2 transition-opacity duration-500 ${phase === "sealed" ? "animate-glow" : "opacity-0"}`}>Tap to open</span>
-                      <span className="text-gold animate-shimmer font-display text-4xl italic">{COUPLE.a} &amp; {COUPLE.b}</span>
-                    </div>
-                    <div className="book-cover-shade absolute inset-0" />
-                  </div>
-                  <div className="book-inside absolute inset-0">
-                    <div className="book-inside-frame absolute inset-[7%]" />
-                    <div className="book-quote absolute inset-[11%] flex flex-col items-center justify-center text-center">
-                      <p dir="rtl" lang="ar" className="font-[Amiri,serif] text-[3rem] leading-[1.9] text-gold-soft">
-                        وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Warm burst of light rising from the centre fold */}
-          <div className="book-flash absolute inset-0" aria-hidden="true">
-            <div className="book-flash-glow" />
-          </div>
-        </button>
-      )}
+      {!lidGone && <OpeningBook phase={phase} onOpen={open} names={`${COUPLE.a} & ${COUPLE.b}`} />}
 
       {petals && <Petals />}
 
