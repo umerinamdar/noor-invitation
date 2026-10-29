@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
-import cover from "@/assets/mughal-cover.jpg";
-import pageArtwork from "@/assets/mughal-paper.jpg";
+import cover from "@/assets/navy-cover-balanced.jpg";
+import pageArtwork from "@/assets/illuminated-ivory-page.jpg";
 import setting from "@/assets/book-setting.jpg";
 import { Button } from "@/components/ui/button";
 import { OPENING } from "./opening-timeline";

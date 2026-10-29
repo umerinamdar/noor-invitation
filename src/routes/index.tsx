@@ -5,6 +5,9 @@ import confetti from "canvas-confetti";
 import heroBackdrop from "@/assets/hero-backdrop.jpg";
 import welcomeBackdrop from "@/assets/welcome-courtyard.jpg";
 import paperTexture from "@/assets/paper-texture.jpg";
+import ivorySurround from "@/assets/carved-ivory-surround.jpg";
+import navySurround from "@/assets/navy-carved-panel.jpg";
+import { Button } from "@/components/ui/button";
 import gallery1 from "@/assets/gallery-1.jpg";
 import gallery2 from "@/assets/gallery-2.jpg";
 import gallery3 from "@/assets/gallery-3.jpg";
@@ -112,7 +115,7 @@ function Invitation() {
   const started = phase === "open";
 
   return (
-    <div style={{ "--paper-img": `url(${paperTexture})` } as CSSProperties} className="relative bg-background">
+    <div style={{ "--paper-img": `url(${paperTexture})`, "--ivory-surround": `url(${ivorySurround})`, "--navy-surround": `url(${navySurround})` } as CSSProperties} className="relative bg-background">
       <audio ref={sealAudio} src="/audio/seal.mp3" preload="auto" />
       <audio ref={music} src="/audio/music.mp3" preload="auto" loop />
 
@@ -175,11 +178,11 @@ function Invitation() {
 
         <ArchBand />
         {/* VENUE + COUNTDOWN */}
-        <section className="paper-emerald px-5 py-20 sm:py-28">
+        <section className="venue-scene paper-emerald px-5 py-20 sm:py-28">
           <Reveal className="mx-auto max-w-3xl text-center">
             <SectionHeading eyebrow="The venue" title={VENUE.name} dark />
             <p className="font-display text-xl text-paper">{VENUE.address}</p>
-            <a href={VENUE.map} target="_blank" rel="noreferrer" className="btn-gold mt-8 inline-block px-8 py-4">View on map</a>
+            <Button asChild className="btn-gold mt-8 h-auto px-8 py-4"><a href={VENUE.map} target="_blank" rel="noreferrer">View on map</a></Button>
             <Divider className="my-16" />
             <Countdown />
           </Reveal>
@@ -228,7 +231,7 @@ function Invitation() {
         <ArchBand />
         {/* BLESSING */}
         <section className="paper-ivory px-5 py-24 sm:py-32">
-          <Reveal className="frame-card mx-auto max-w-2xl px-8 py-14 text-center">
+          <Reveal className="mx-auto max-w-2xl px-8 py-14 text-center">
             <Corners />
             <p className="eyebrow text-gold">A blessing</p>
             <blockquote className="mt-6 font-display text-2xl font-light italic leading-relaxed text-tint sm:text-3xl">
@@ -277,7 +280,7 @@ function Invitation() {
         <section className="relative overflow-hidden px-5 py-28 text-center">
           <img src={heroBackdrop} alt="" loading="lazy" width={1536} height={1024} className="absolute inset-0 h-full w-full object-cover brightness-50" />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
-          <Reveal className="frame-card-dark relative mx-auto max-w-lg px-8 py-14">
+          <Reveal className="relative mx-auto max-w-lg px-8 py-14">
             <Corners />
             <p className="eyebrow text-gold-soft">With love & gratitude</p>
             <p className="text-gold animate-shimmer mt-5 font-display text-5xl italic sm:text-6xl">{COUPLE.a} &amp; {COUPLE.b}</p>
@@ -298,7 +301,7 @@ function Countdown() {
       <p className="eyebrow mb-6 text-gold-soft">Counting down to the Nikah</p>
       <div className="grid grid-cols-4 gap-2 sm:gap-4" aria-live="off">
         {units.map(([l, v]) => (
-          <div key={l} className="frame-card-dark px-1 py-5 sm:py-7">
+          <div key={l} className="countdown-unit px-1 py-5 sm:py-7">
             <p className="text-gold font-display text-3xl tabular-nums sm:text-5xl">{c.ready ? String(v).padStart(2, "0") : "--"}</p>
             <p className="eyebrow mt-2 text-[0.55rem] text-paper sm:text-[0.65rem]">{l}</p>
           </div>
@@ -335,7 +338,7 @@ function Rsvp() {
         </div>
       </fieldset>
       <label className="block"><span className="eyebrow text-gold">A note for the couple</span><textarea rows={3} className="field mt-2" /></label>
-      <button className="btn-gold w-full px-6 py-4">Send reply</button>
+      <Button type="submit" className="btn-gold h-auto w-full px-6 py-4">Send reply</Button>
     </form>
   );
 }
